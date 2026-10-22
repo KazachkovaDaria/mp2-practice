@@ -26,12 +26,19 @@ TEST(TDynamicVector, can_create_copied_vector)
 
 TEST(TDynamicVector, copied_vector_is_equal_to_source_one)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	TDynamicVector<int> v1(v);
+	EXPECT_EQ(v, v1);
 }
 
 TEST(TDynamicVector, copied_vector_has_its_own_memory)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	TDynamicVector<int> v1(v);
+	v[0] = 6;
+	EXPECT_EQ(v1[0], 1);
 }
 
 TEST(TDynamicVector, can_get_size)
@@ -51,52 +58,84 @@ TEST(TDynamicVector, can_get_size)
 
 TEST(TDynamicVector, throws_when_set_element_with_negative_index)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(4);
+	EXPECT_ANY_THROW(v[-1] = 1);
 }
 
 TEST(TDynamicVector, throws_when_set_element_with_too_large_index)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(4);
+	EXPECT_ANY_THROW(v[10] = 1);
 }
 
 TEST(TDynamicVector, can_assign_vector_to_itself)
-{
-  ADD_FAILURE();
+{	
+	TDynamicVector<int> v(4);
+	EXPECT_NO_THROW(v = v);
+	EXPECT_EQ(v, v);
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {5, 6, 7, 8};
+	TDynamicVector<int> v1(test1, 4);
+	v = v1;
+	EXPECT_EQ(v, v1);
+
 }
 
 TEST(TDynamicVector, assign_operator_change_vector_size)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(4);
+	TDynamicVector<int> v1(3);
+	v = v1;
+	EXPECT_EQ(v.size(), 3);
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_different_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[3] {5, 6, 7};
+	TDynamicVector<int> v1(test1, 3);
+	v = v1;
+	EXPECT_EQ(v, v1);
 }
 
 TEST(TDynamicVector, compare_equal_vectors_return_true)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[3] {5, 6, 7};
+	TDynamicVector<int> v1(test1, 3);
+	v = v1;
+	EXPECT_EQ(v,v1);
 }
 
 TEST(TDynamicVector, compare_vector_with_itself_return_true)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(4);
+	EXPECT_TRUE(v == v);
 }
 
 TEST(TDynamicVector, vectors_with_different_size_are_not_equal)
 {
-  ADD_FAILURE();
+	TDynamicVector<int> v(4);
+	TDynamicVector<int> v1(3);
+	EXPECT_NE(v, v1);
 }
 
 TEST(TDynamicVector, can_add_scalar_to_vector)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {7, 8, 9, 10};
+	TDynamicVector <int> add_scalar(test, 4);
+	add_scalar = v + 6;
+	EXPECT_EQ(add_scalar, test1);
 }
 
 TEST(TDynamicVector, can_subtract_scalar_from_vector)
