@@ -123,8 +123,10 @@ TEST(TDynamicVector, compare_vector_with_itself_return_true)
 
 TEST(TDynamicVector, vectors_with_different_size_are_not_equal)
 {
-	TDynamicVector<int> v(4);
-	TDynamicVector<int> v1(3);
+	int* test = new int[4] {1, 2, 3, 4};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[3] {5, 6, 7};
+	TDynamicVector<int> v1(test1, 3);
 	EXPECT_NE(v, v1);
 }
 
@@ -133,19 +135,29 @@ TEST(TDynamicVector, can_add_scalar_to_vector)
 	int* test = new int[4] {1, 2, 3, 4};
 	TDynamicVector<int> v(test, 4);
 	int* test1 = new int[4] {7, 8, 9, 10};
-	TDynamicVector <int> add_scalar(test, 4);
-	add_scalar = v + 6;
-	EXPECT_EQ(add_scalar, test1);
+	TDynamicVector <int> expected(test1, 4);
+	TDynamicVector <int> add_scalar = v + 6;
+	EXPECT_EQ(add_scalar, expected);
 }
 
 TEST(TDynamicVector, can_subtract_scalar_from_vector)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {6, 7, 8, 9};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {4, 5, 6, 7};
+	TDynamicVector <int> expected(test1, 4);
+	TDynamicVector <int> sub_scalar = v - 2;
+	EXPECT_EQ(sub_scalar, expected);
 }
 
 TEST(TDynamicVector, can_multiply_scalar_by_vector)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {6, 7, 8, 9};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {24, 28, 32, 36};
+	TDynamicVector <int> expected(test1, 4);
+	TDynamicVector <int> mult_scalar = v * 4;
+	EXPECT_EQ(mult_scalar, expected);
 }
 
 TEST(TDynamicVector, can_add_vectors_with_equal_size)

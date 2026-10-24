@@ -205,30 +205,53 @@ class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
   using TDynamicVector<TDynamicVector<T>>::pMem;
   using TDynamicVector<TDynamicVector<T>>::sz;
 public:
-  TDynamicMatrix(size_t s = 1) : TDynamicVector<TDynamicVector<T>>(s)
-  {
-    for (size_t i = 0; i < sz; i++)
+    TDynamicMatrix(size_t s = 1) : TDynamicVector<TDynamicVector<T>>(s)
+    {
+        if (sz == 0)
+            throw exception("Can't create a zero sized matrix");
+        if (sz > MAX_MATRIX_SIZE)
+            throw exception("Can't create a matrix this great");
+        for (size_t i = 0; i < sz; i++)
       pMem[i] = TDynamicVector<T>(sz);
-  }
+    }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
 
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
-      throw "Method is not implemented";
+      if (sz != m.sz)
+          return false;
+      for (int i = 0; i < sz; i++)
+      {
+          if (pMem[i] != m.pMem[i])
+              return false;
+      }
+      return true;
+
   }
 
   // матрично-скалярные операции
   TDynamicMatrix operator*(const T& val)
   {
-      throw "Method is not implemented";
+      TDynamicMatrix res(sz);
+      for (int i = 0; i < sz; i++)
+          res.pMem[i] = pMem[i] * val;
+      return res;
   }
 
   // матрично-векторные операции
   TDynamicVector<T> operator*(const TDynamicVector<T>& v)
   {
-      throw "Method is not implemented";
+      TDynamicVector res(sz);
+      if (sz != v.sz)
+          throw invalid_argument("Invalid argument");
+      for (int i = 0; i < sz; i++)
+      {
+          for (int i = 0; j < sz; j++)
+              res[i] += pMem[i][j] * v.pMem[j];
+      }
+      return res;
   }
 
   // матрично-матричные операции
