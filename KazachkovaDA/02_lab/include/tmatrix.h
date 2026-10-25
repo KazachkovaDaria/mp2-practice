@@ -165,7 +165,7 @@ public:
           res.pMem[i] = pMem[i] - v.pMem[i];
       return res;
   }
-  T operator*(const TDynamicVector& v) noexcept(noexcept(T()))
+  T operator*(const TDynamicVector& v) //noexcept(noexcept(T()))
   {
       if (sz != v.sz)
           throw out_of_range("Invalid arguments");
@@ -243,13 +243,13 @@ public:
   // матрично-векторные операции
   TDynamicVector<T> operator*(const TDynamicVector<T>& v)
   {
-      TDynamicVector res(sz);
-      if (sz != v.sz)
+      TDynamicVector<int>res(sz);
+      if (sz != v.size())
           throw invalid_argument("Invalid argument");
       for (int i = 0; i < sz; i++)
       {
-          for (int i = 0; j < sz; j++)
-              res[i] += pMem[i][j] * v.pMem[j];
+          for (int j = 0; j < sz; j++)
+              res[i] += pMem[i][j] * v[j];
       }
       return res;
   }

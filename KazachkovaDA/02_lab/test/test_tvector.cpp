@@ -162,31 +162,64 @@ TEST(TDynamicVector, can_multiply_scalar_by_vector)
 
 TEST(TDynamicVector, can_add_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {6, 7, 8, 9};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {1, 2, 3, 4};
+	TDynamicVector <int> v1(test1, 4);
+	int* sum = new int[4] {7, 9, 11, 13};
+	TDynamicVector <int> expected(sum, 4);
+	TDynamicVector <int> add_vectors = v + v1;
+	EXPECT_EQ(add_vectors, expected);
 }
 
 TEST(TDynamicVector, cant_add_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {6, 7, 8, 9};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[3] {1, 2, 3};
+	TDynamicVector <int> v1(test1, 3);
+	EXPECT_ANY_THROW(v + v1);
 }
 
 TEST(TDynamicVector, can_subtract_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {10, 14, 19, 27};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {1, 2, 3, 4};
+	TDynamicVector <int> v1(test1, 4);
+	int* sub = new int[4] {9, 12, 16, 23};
+	TDynamicVector <int> expected(sub, 4);
+	TDynamicVector <int> sub_vectors = v - v1;
+	EXPECT_EQ(sub_vectors, expected);
 }
 
 TEST(TDynamicVector, cant_subtract_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {6, 7, 8, 9};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[3] {1, 2, 3};
+	TDynamicVector <int> v1(test1, 3);
+	EXPECT_ANY_THROW(v - v1);
 }
 
 TEST(TDynamicVector, can_multiply_vectors_with_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {10, 14, 19, 27};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[4] {1, 2, 3, 4};
+	TDynamicVector <int> v1(test1, 4);
+	int* mult = new int[4] {10, 28, 57, 108};
+	int expected = 203;
+	int mult_vectors = v * v1;
+	EXPECT_EQ(mult_vectors, expected);
 }
 
 TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
 {
-  ADD_FAILURE();
+	int* test = new int[4] {6, 7, 8, 9};
+	TDynamicVector<int> v(test, 4);
+	int* test1 = new int[3] {1, 2, 3};
+	TDynamicVector <int> v1(test1, 3);
+	EXPECT_ANY_THROW(v * v1);
 }
 
