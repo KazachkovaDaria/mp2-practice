@@ -217,6 +217,12 @@ public:
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
 
+  //размер
+  size_t size()
+  {
+      return sz;
+  }
+
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
@@ -257,15 +263,42 @@ public:
   // матрично-матричные операции
   TDynamicMatrix operator+(const TDynamicMatrix& m)
   {
-      throw "Method is not implemented";
+      if (sz != m.sz)
+          throw invalid_argument("Sizes don't match");
+      TDynamicMatrix<int> res(sz);
+      for (int i = 0; i < sz; i++)
+          for (int j = 0; j < sz; j++)
+              res.pMem[i][j] = pMem[i][j] + m.pMem[i][j];
+      return res;
   }
   TDynamicMatrix operator-(const TDynamicMatrix& m)
   {
-      throw "Method is not implemented";
+      if (sz != m.sz)
+          throw invalid_argument("Sizes don't match");
+      TDynamicMatrix<int> res(sz);
+      for (int i = 0; i < sz; i++)
+          for (int j = 0; j < sz; j++)
+              res.pMem[i][j] = pMem[i][j] - m.pMem[i][j];
+      return res;
   }
   TDynamicMatrix operator*(const TDynamicMatrix& m)
   {
-      throw "Method is not implemented";
+      if (sz != m.sz)
+          throw invalid_argument("Sizes don't match");
+      TDynamicMatrix<int> res(sz);
+      for (int i = 0; i < sz; i++)
+      {
+          for (int j = 0; j < sz; j++)
+          {
+              T sum = T{};
+              for (int k = 0; k < sz; k++)
+              {
+                  sum += pMem[i][k] * m.pMem[k][j];
+              }
+              res.pMem[i][j] = sum;
+          }
+      }
+      return res;
   }
 
   // ввод/вывод
