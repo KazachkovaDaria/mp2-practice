@@ -131,7 +131,7 @@ public:
           res.pMem[i] = pMem[i] + val;
       return res;
   }
-  TDynamicVector operator-(T val)
+  TDynamicVector operator-(T val) // todo v+(-val)
   {
       TDynamicVector<T> res(sz);
       for (int i = 0; i < sz; i++)
@@ -156,7 +156,7 @@ public:
           res.pMem[i] = pMem[i] + v.pMem[i];
       return res;
   }
-  TDynamicVector operator-(const TDynamicVector& v)
+  TDynamicVector operator-(const TDynamicVector& v) //todo v1+v2*(-1)
   {
       if (sz != v.sz)
           throw out_of_range("Invalid arguments");
@@ -212,7 +212,7 @@ public:
         if (sz > MAX_MATRIX_SIZE)
             throw exception("Can't create a matrix this great");
         for (size_t i = 0; i < sz; i++)
-      pMem[i] = TDynamicVector<T>(sz);
+            pMem[i] = TDynamicVector<T>(sz); // todo верхнетреугольные матрицы
     }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
