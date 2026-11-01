@@ -133,10 +133,7 @@ public:
   }
   TDynamicVector operator-(T val) // todo v+(-val)
   {
-      TDynamicVector<T> res(sz);
-      for (int i = 0; i < sz; i++)
-          res.pMem[i] = pMem[i] - val;
-      return res;
+      return (*this + (-val));
   }
   TDynamicVector operator*(T val)
   {
@@ -212,13 +209,13 @@ public:
         if (sz > MAX_MATRIX_SIZE)
             throw exception("Can't create a matrix this great");
         for (size_t i = 0; i < sz; i++)
-            pMem[i] = TDynamicVector<T>(sz); // todo верхнетреугольные матрицы
+            pMem[i] = TDynamicVector<T>(sz - i); // todo верхнетреугольные матрицы
     }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
 
   //размер
-  size_t size()
+  size_t size() const
   {
       return sz;
   }
@@ -237,8 +234,14 @@ public:
 
   }
 
+  bool operator!=(const TDynamicMatrix& m) const noexcept
+  {
+      return (!(*this == m));
+
+  }
+
   // матрично-скалярные операции
-  TDynamicMatrix operator*(const T& val)
+  TDynamicMatrix operator*(const T& val) const
   {
       TDynamicMatrix res(sz);
       for (int i = 0; i < sz; i++)
@@ -247,11 +250,11 @@ public:
   }
 
   // матрично-векторные операции
-  TDynamicVector<T> operator*(const TDynamicVector<T>& v)
+  TDynamicVector<T> operator*(const TDynamicVector<T>& v) const
   {
-      TDynamicVector<int>res(sz);
       if (sz != v.size())
           throw invalid_argument("Invalid argument");
+           TDynamicVector<T>res(sz);
       for (int i = 0; i < sz; i++)
       {
           for (int j = 0; j < sz; j++)
@@ -261,41 +264,35 @@ public:
   }
 
   // матрично-матричные операции
-  TDynamicMatrix operator+(const TDynamicMatrix& m)
+  TDynamicMatrix operator+(const TDynamicMatrix& m) const
   {
       if (sz != m.sz)
           throw invalid_argument("Sizes don't match");
-      TDynamicMatrix<int> res(sz);
+      TDynamicMatrix<T> res(sz);
       for (int i = 0; i < sz; i++)
-          for (int j = 0; j < sz; j++)
+          for (int j = 0; j < sz - i; j++)
               res.pMem[i][j] = pMem[i][j] + m.pMem[i][j];
       return res;
   }
-  TDynamicMatrix operator-(const TDynamicMatrix& m)
+  TDynamicMatrix operator-(const TDynamicMatrix& m) const
   {
-      if (sz != m.sz)
-          throw invalid_argument("Sizes don't match");
-      TDynamicMatrix<int> res(sz);
-      for (int i = 0; i < sz; i++)
-          for (int j = 0; j < sz; j++)
-              res.pMem[i][j] = pMem[i][j] - m.pMem[i][j];
-      return res;
+      return (*this + m * (-1));
   }
-  TDynamicMatrix operator*(const TDynamicMatrix& m)
+  TDynamicMatrix operator*(const TDynamicMatrix& m) const
   {
       if (sz != m.sz)
           throw invalid_argument("Sizes don't match");
-      TDynamicMatrix<int> res(sz);
+      TDynamicMatrix<T> res(sz);
       for (int i = 0; i < sz; i++)
       {
           for (int j = 0; j < sz; j++)
           {
               T sum = T{};
-              for (int k = 0; k < sz; k++)
+              for (int k = i; k <= j; k++)
               {
-                  sum += pMem[i][k] * m.pMem[k][j];
+                  sum += pMem[i][k - i] * m.pMem[k][j - k];
               }
-              res.pMem[i][j] = sum;
+              res.pMem[i][j - i] = sum;
           }
       }
       return res;
@@ -306,8 +303,8 @@ public:
   {
       for (int i = 0; i < v.sz; i++)
       {
-          for (int j = 0; j < v.sz; j++)
-              istr >> pMem[i][j];
+          for (int j = 0; j < v.sz - i; j++)
+              istr >> v.pMem[i][j];
       }
       return istr;
   }
