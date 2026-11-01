@@ -257,8 +257,8 @@ public:
            TDynamicVector<T>res(sz);
       for (int i = 0; i < sz; i++)
       {
-          for (int j = 0; j < sz; j++)
-              res[i] += pMem[i][j] * v[j];
+          for (int j = i; j < sz; j++)
+              res[i] += pMem[i][j - i] * v[j];
       }
       return res;
   }
@@ -285,7 +285,7 @@ public:
       TDynamicMatrix<T> res(sz);
       for (int i = 0; i < sz; i++)
       {
-          for (int j = 0; j < sz; j++)
+          for (int j = i; j < sz; j++)
           {
               T sum = T{};
               for (int k = i; k <= j; k++)

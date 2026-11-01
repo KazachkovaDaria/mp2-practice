@@ -23,6 +23,10 @@ void main()
       a[i][j - i] =  i * 10 + j;
       b[i][j - i] = (i * 10 + j) * 100;
     }
+
+  for (int i = 0; i < 5; i++)
+      v[i] = i + 1;
+
   c = a + b;
   cout << "Matrix a = " << endl << a << endl;
   cout << "Matrix b = " << endl << b << endl;

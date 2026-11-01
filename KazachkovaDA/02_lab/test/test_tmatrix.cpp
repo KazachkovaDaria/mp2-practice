@@ -198,11 +198,11 @@ TEST(TDynamicMatrix, cant_subtract_matrixes_with_not_equal_size)
 	EXPECT_ANY_THROW(m - m1);
 }
 
-//TEST(TDynamicMatrix, cant_subtract_matrix_with_a_const)
-//{
-//	TDynamicMatrix<int> m(3);
-//	TDynamicMatrix<int> m1(4);
-//	EXPECT_ANY_THROW(m - m1);
-//}
+TEST(TDynamicMatrix, cant_subtract_matrix_with_a_const)
+{
+	TDynamicMatrix<int> m(3);
+	TDynamicMatrix<int> m1(4);
+	EXPECT_ANY_THROW(m - m1);
+}
 
 //todo multi
