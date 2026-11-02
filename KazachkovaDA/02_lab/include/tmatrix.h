@@ -209,7 +209,7 @@ public:
         if (sz > MAX_MATRIX_SIZE)
             throw exception("Can't create a matrix this great");
         for (size_t i = 0; i < sz; i++)
-            pMem[i] = TDynamicVector<T>(sz - i); // todo верхнетреугольные матрицы
+            pMem[i] = TDynamicVector<T>(sz - i); 
     }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
@@ -270,8 +270,7 @@ public:
           throw invalid_argument("Sizes don't match");
       TDynamicMatrix<T> res(sz);
       for (int i = 0; i < sz; i++)
-          for (int j = 0; j < sz - i; j++)
-              res.pMem[i][j] = pMem[i][j] + m.pMem[i][j];
+          res.pMem[i] = pMem[i] + m.pMem[i];
       return res;
   }
   TDynamicMatrix operator-(const TDynamicMatrix& m) const
@@ -311,7 +310,13 @@ public:
   friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v)
   {
       for (int i = 0; i < v.sz; i++)
-          ostr << v.pMem[i] << "\n";
+      {
+          for (int j = 0; j < i; j++)
+              ostr << '0' << '\t';
+          for (int j = 0; j < v.sz - i; i++)
+              ostr << v.pMem[i][j] << '\t';
+          ostr << endl;
+      }
       return ostr;
   }
 };
